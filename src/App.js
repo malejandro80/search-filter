@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+/** @format */
+
+import logo from './logo.svg'
+import SearchBar from './components/SearchBar/SearchBar'
+
+import { React, useState } from 'react'
+import NewMaterial from './modals/NewMaterial'
+import useMaterialHandler from './hooks/useMaterialHandler'
+import FilterList from './components/FilterList/FilterList'
+import './App.scss'
 
 function App() {
+  const { metals, setMetals, filterMetals, search, setSearch, addNewMetal } =
+    useMaterialHandler()
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className='main-background'>
+      <h1>searh a material</h1>
+      <div>
+        <SearchBar search={search} setSearch={setSearch} />
+        <button
+          onClick={() => {
+            setIsModalOpen(true)
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          +
+        </button>
+      </div>
+      <FilterList filterMetals={filterMetals} />
+      <NewMaterial
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        addNewMetal={addNewMetal}
+      />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
